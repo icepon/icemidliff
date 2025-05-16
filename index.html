@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>LIFF App - Display User ID</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h2>Welcome to the LIFF App</h2>
+  <p><strong>User ID (MID):</strong> <span id="userId">Loading...</span></p>
+
+  <script>
+    // Replace with your actual LIFF ID
+    const liffId = "YOUR_LIFF_ID";
+
+    async function main() {
+      try {
+        await liff.init({ liffId });
+
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        } else {
+          const profile = await liff.getProfile();
+          document.getElementById("userId").textContent = profile.userId;
+        }
+      } catch (error) {
+        console.error("LIFF Initialization failed", error);
+        document.getElementById("userId").textContent = "Error retrieving user ID";
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>
